@@ -25,6 +25,9 @@ function _cac_cc_append_to_the_post( $retval = '') {
 	 */
 	$site_license = cac_cc_get_default_license();
 	$post_license = get_post_meta( get_post()->ID, 'cac_cc_license', true );
+	if ( empty( $post_license ) ) {
+		$post_license = $site_license;
+	}
 	if ( is_active_widget( false, false, 'cac_creative_commons_widget' ) && $site_license === $post_license ) {
 		return $retval;
 	}
