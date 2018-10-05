@@ -24,7 +24,7 @@ function cac_cc_get_default_license() {
 	 */
 	$default = apply_filters( 'cac_cc_default', 'by' );
 
-	return get_option( 'cac_cc_default', 'by' );
+	return get_option( 'cac_cc_default', $default );
 }
 
 /**
