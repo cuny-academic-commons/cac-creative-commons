@@ -1,9 +1,14 @@
 <?php
-
+/**
+ * Frontend integration to a BuddyPress group's "Manage > Details" page.
+ *
+ * @package cac-creative-commons
+ */
 
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/frontend.php';
 
+// Enqueue chooser assets.
 add_action( 'wp_enqueue_scripts', function() {
 	require_once CAC_CC_DIR . '/includes/admin-functions.php';
 	cac_cc_register_scripts();

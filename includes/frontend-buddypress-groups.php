@@ -1,4 +1,11 @@
 <?php
+/**
+ * Frontend integration to a BuddyPress group page.
+ *
+ * Displays a group's license in the group footer.
+ *
+ * @package cac-creative-commons
+ */
 
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/frontend.php';
