@@ -37,21 +37,5 @@ add_action( 'loop_start', function() {
 
 // BuddyPress integration.
 add_action( 'bp_init', function() {
-	// Group creation and settings.
-	if ( is_user_logged_in() &&
-		( bp_is_group_admin_page() && bp_is_action_variable( 'edit-details', 0 ) ||
-			bp_is_group_create() && bp_is_action_variable( 'group-settings', 1 ) )
-	) {
-		require __DIR__ . '/includes/frontend-buddypress-groups-admin.php';
-	}
-
-	// Group frontend.
-	if ( bp_is_group() ) {
-		require __DIR__ . '/includes/frontend-buddypress-groups.php';
-	}
-
-	// Blog create.
-	if ( is_user_logged_in() && bp_is_create_blog() ) {
-		require __DIR__ . '/includes/frontend-buddypress-blog-create.php';
-	}
+	require __DIR__ . '/includes/buddypress.php';
 } );
