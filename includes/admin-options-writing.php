@@ -44,7 +44,13 @@ function cac_cc_settings_writing_section() {
 
 SELECT;
 
-	$row( $size_select, $size_header );
+	$widgets_menu_txt = esc_html__( 'Appearance > Widgets', 'cac-creative-commons' );
+
+	/* translators: %s is for the "Appearance > Widgets" admin menu link. */
+	$instructions = sprintf( __( 'To display your site\'s license, use the provided "Creative Commons License" widget available at %s.', 'cac-creative-commons' ), sprintf( '<a href="%1$s">%2$s</a>', admin_url( 'widgets.php' ), $widgets_menu_txt ) );
+	$instructions = sprintf( '<p class="timezone-info">%s</p>', $instructions );
+
+	$row( $size_select . $instructions, $size_header );
 
 	echo '</table>';
 }
