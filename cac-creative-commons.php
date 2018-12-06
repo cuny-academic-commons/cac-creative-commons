@@ -18,12 +18,15 @@ add_action( 'admin_menu', function() {
 } );
 
 /**
- * Register license support for the 'post' post type.
+ * Register license support for certain post types.
+ *
+ * Currently includes 'post' and 'page'.
  *
  * @since 0.1.0
  */
 function cac_cc_register_post_type_license_support() {
 	add_post_type_support( 'post', 'cc-license' );
+	add_post_type_support( 'page', 'cc-license' );
 }
 add_action( 'init', 'cac_cc_register_post_type_license_support' );
 
