@@ -17,6 +17,16 @@ add_action( 'admin_menu', function() {
 	require __DIR__ . '/includes/admin.php';
 } );
 
+/**
+ * Register license support for the 'post' post type.
+ *
+ * @since 0.1.0
+ */
+function cac_cc_register_post_type_license_support() {
+	add_post_type_support( 'post', 'cc-license' );
+}
+add_action( 'init', 'cac_cc_register_post_type_license_support' );
+
 // Widget.
 function cac_cc_widgets_init() {
 	require __DIR__ . '/includes/class-cac-creative-commons-widget.php';

@@ -40,14 +40,12 @@ function _cac_cc_append_to_the_post( $retval = '') {
 	/**
 	 * Filter to display the Creative Commons license after the post.
 	 *
-	 * For example. to only display on singular pages and not archives:
-	 *    add_filter( 'cac_cc_display_license_after_post', 'is_singular' );
-	 *
 	 * @since 0.1.0
 	 *
-	 * @param bool $retval Defaults to true.
+	 * @param bool $retval Defaults to true when on a single page and if the post type supports it.
+	 *                     Otherwise, false.
 	 */
-	$show = apply_filters( 'cac_cc_display_license_after_post', true );
+	$show = apply_filters( 'cac_cc_display_license_after_post', is_singular() && post_type_supports( get_post_type(), 'cc-license' ) );
 
 	if ( ! $show ) {
 		return $retval;

@@ -30,6 +30,11 @@ add_action( 'admin_enqueue_scripts', function() {
  * @param WP_Post $post Post object.
  */
 function cac_cc_post_add_license_to_metabox( $post ) {
+	// Only show our field if the post type supports it.
+	if ( false === post_type_supports( $post->post_type, 'cc-license' ) ) {
+		return;
+	}
+
 	// Fetch the individual post license, if available.
 	add_filter( 'option_cac_cc_default', function( $retval ) use ( $post ) {
 		$post_license = get_post_meta( $post->ID, 'cac_cc_license', true );
