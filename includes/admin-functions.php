@@ -16,7 +16,7 @@ function cac_cc_register_scripts() {
 
 	//wp_register_script( 'cac-showdown', 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.4/showdown.min.js' );
 
-	wp_register_script( 'cac-creative-commons', CAC_CC_URL . 'assets/js.js', array( 'cac-surveyjs', 'thickbox' ) );
+	wp_register_script( 'cac-creative-commons', CAC_CC_URL . 'assets/js.js', array( 'cac-surveyjs', 'media-upload' ) );
 
 	wp_localize_script( 'cac-creative-commons', 'CAC_Creative_Commons', array( 
 		'licenses' => cac_cc_get_licenses(),
