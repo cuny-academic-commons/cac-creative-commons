@@ -38,7 +38,7 @@ function cac_cc_register_scripts() {
 		),
 		'questions' => array(
 			'publicDomain'     => esc_html__( 'Do you want to use a public domain license?', 'cac-creative-commons' ),
-			'publicDomainDesc' => esc_html__( 'If you want to share your work with no conditions, select Yes. If you want to share your work, but with some restrictions, select No.', 'cac-creative-commons' ),
+			'publicDomainDesc' => esc_html__( 'If you want to share your work with no conditions, meaning anyone can use it however they like, select Yes. If you want to share your work, but with some restrictions, select No.', 'cac-creative-commons' ),
 			'derivative'       => esc_html__( 'Allow adaptations of your work to be shared?', 'cac-creative-commons' ),
 			'derivativeDesc'   => esc_html__( "If you select No, only unaltered copies of the work can be used by the licensee. If you select the Share Alike option, you permit others to distribute derivative works only under the same license or a compatible one.", 'cac-creative-commons' ),
 			'commercial'       => esc_html__( 'Allow commercial uses of your work?', 'cac-creative-commons' ),
