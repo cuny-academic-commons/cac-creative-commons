@@ -6,7 +6,7 @@
  */
 
 // Load required functions only on certain pages.
-foreach ( array( 'options-writing.php', 'post.php', 'post-new.php' ) as $p ) {
+foreach ( array( 'options-writing.php', 'post.php', 'post-new.php', 'edit.php' ) as $p ) {
 	add_action( "load-{$p}", function() use ( $p ) {
 		require_once __DIR__ . '/functions.php';
 		require_once __DIR__ . '/admin-functions.php';
