@@ -46,14 +46,20 @@ function cac_cc_admin_display_post_type_column( $col_name, $post_id ) {
 	}
 
 	// Fetch the individual post license, if available.
-	add_filter( 'option_cac_cc_default', function( $retval ) use ( $post_id ) {
+	$filter = function( $retval ) use ( $post_id ) {
 		$post_license = get_post_meta( $post_id, 'cac_cc_license', true );
 		if ( ! empty( $post_license ) ) {
 			return $post_license;
 		}
 
 		return $retval;
-	} );
+	};
+
+	// Add our closure as a filter.
+	add_filter( 'option_cac_cc_default', $filter );
 
 	cac_cc_license_link( array( 'use_logo' => true, 'logo_size' => 'compact' ) );
+
+	// Remove our temporary filter.
+	remove_filter( 'option_cac_cc_default', $filter );
 }

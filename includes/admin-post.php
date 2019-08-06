@@ -36,14 +36,17 @@ function cac_cc_post_add_license_to_metabox( $post ) {
 	}
 
 	// Fetch the individual post license, if available.
-	add_filter( 'option_cac_cc_default', function( $retval ) use ( $post ) {
+	$filter = function( $retval ) use ( $post ) {
 		$post_license = get_post_meta( $post->ID, 'cac_cc_license', true );
 		if ( ! empty( $post_license ) ) {
 			return $post_license;
 		}
 
 		return $retval;
-	} );
+	};
+
+	// Add our closure as a filter.
+	add_filter( 'option_cac_cc_default', $filter );
 
 	echo '<div class="misc-pub-section misc-pub-revisions cac-cc-metabox">';
 
@@ -59,5 +62,8 @@ function cac_cc_post_add_license_to_metabox( $post ) {
 		'link_wrapper_element' => '',
 	) );
 	echo '</div>';
+
+	// Remove our temporary filter.
+	remove_filter( 'option_cac_cc_default', $filter );
 }
 add_action( 'post_submitbox_misc_actions', 'cac_cc_post_add_license_to_metabox', 1 );
