@@ -89,7 +89,7 @@ function cac_cc_admin_bulk_edit_box( $column_name, $post_type ) {
 	if ( ! post_type_supports( $post_type, 'cc-license' ) ) {
 		return;
 	}
-	
+
 	if ( 'cc_license' !== $column_name ) {
 		return;
 	}
@@ -135,5 +135,4 @@ add_action( 'save_post', function( $post_id, $post, $update ) {
 	if ( cac_cc_validate_license( $_REQUEST['cac-cc-license'] ) ) {
 		update_post_meta( $post_id, 'cac_cc_license', $_REQUEST['cac-cc-license'] );
 	}
-	
 }, 10, 3 );

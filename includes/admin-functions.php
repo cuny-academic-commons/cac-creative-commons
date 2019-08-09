@@ -18,7 +18,7 @@ function cac_cc_register_scripts() {
 
 	wp_register_script( 'cac-creative-commons', CAC_CC_URL . 'assets/js.js', array( 'cac-surveyjs', 'media-upload' ), '20190808' );
 
-	wp_localize_script( 'cac-creative-commons', 'CAC_Creative_Commons', array( 
+	wp_localize_script( 'cac-creative-commons', 'CAC_Creative_Commons', array(
 		'licenses' => cac_cc_get_licenses(),
 		'chooser' => array(
 			// 'derivative' key
