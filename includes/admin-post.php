@@ -11,9 +11,11 @@ add_action( 'save_post', function( $post_id ) {
 		if ( ! wp_verify_nonce( $_POST['cac-cc-nonce'], 'cac-cc-license' ) ) {
 			return;
 		}
-	
+
 		// Update license.
-		update_post_meta( $post_id, 'cac_cc_license', strip_tags( $_POST['cac-cc-license'] ) );
+		if ( cac_cc_validate_license( $_POST['cac-cc-license'] ) ) {
+			update_post_meta( $post_id, 'cac_cc_license', $_POST['cac-cc-license'] );
+		}
 	}
 } );
 

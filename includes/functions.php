@@ -47,6 +47,22 @@ function cac_cc_get_licenses() {
 }
 
 /**
+ * Check to see if a license exists or not.
+ *
+ * @since 0.1.0
+ *
+ * @return bool
+ */
+function cac_cc_validate_license( $license ) {
+	$licenses = cac_cc_get_licenses();
+	if ( ! isset( $licenses[$license] ) ) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/**
  * Returns the current license version for Creative Commons licenses.
  *
  * This covers all licenses except the CC0 license, which uses a different

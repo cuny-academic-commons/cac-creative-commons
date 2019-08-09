@@ -23,15 +23,15 @@ function cac_cc_group_save() {
 	if ( ! isset( $_POST['cac-cc-nonce'] ) ) {
 		return;
 	}
-
 	if ( ! wp_verify_nonce( $_POST['cac-cc-nonce'], 'cac-cc-license' ) ) {
 		return;
 	}
 
-	$group_id = bp_is_group() ? bp_get_current_group_id() : bp_get_new_group_id();
-
 	// Update license.
-	groups_update_groupmeta( $group_id, 'cac_cc_license', strip_tags( $_POST['cac-cc-license'] ) );
+	if ( cac_cc_validate_license( $_POST['cac-cc-license'] ) ) {
+		$group_id = bp_is_group() ? bp_get_current_group_id() : bp_get_new_group_id();
+		groups_update_groupmeta( $group_id, 'cac_cc_license', $_POST['cac-cc-license'] );
+	}
 }
 add_action( 'groups_group_details_edited', 'cac_cc_group_save', 0 );
 add_action( 'groups_create_group_step_save_group-settings', 'cac_cc_group_save', 0 );

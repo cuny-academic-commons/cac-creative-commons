@@ -11,7 +11,9 @@ if ( isset( $_POST['cac-cc-nonce'] ) ) {
 	}
 
 	// Update license.
-	update_option( 'cac_cc_default', strip_tags( $_POST['cac-cc-license'] ) );
+	if ( cac_cc_validate_license( $_POST['cac-cc-license'] ) ) {
+		update_option( 'cac_cc_default', $_POST['cac-cc-license'] );
+	}
 
 	// Update size.
 	update_option( 'cac_cc_logo_size', strip_tags( $_POST['cac-cc-default-size'] ) );

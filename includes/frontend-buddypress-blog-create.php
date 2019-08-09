@@ -27,12 +27,13 @@ function cac_cc_blog_save( $blog_id ) {
 	if ( ! isset( $_POST['cac-cc-nonce'] ) ) {
 		return;
 	}
-
 	if ( ! wp_verify_nonce( $_POST['cac-cc-nonce'], 'cac-cc-license' ) ) {
 		return;
 	}
 
 	// Update license.
-	update_blog_option( $blog_id, 'cac_cc_default', strip_tags( $_POST['cac-cc-license'] ) );
+	if ( cac_cc_validate_license( $_POST['cac-cc-license'] ) ) {
+		update_blog_option( $blog_id, 'cac_cc_default', $_POST['cac-cc-license'] );
+	}
 }
 add_action( 'wpmu_new_blog', 'cac_cc_blog_save' );
