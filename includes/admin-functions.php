@@ -92,6 +92,8 @@ function cac_cc_button_chooser( $args = array() ) {
  *     @type string $link_label            Label for the link.
  *     @type string $link_class            CSS classes for the link. Default: 'button button-secondary'.
  *     @type string $link_wrapper_element  Element to wrap the link with. Default: 'p'.
+ *     @type bool   $output_nonce          Whether to output the default nonce. Default: true
+ *     @type string $parent                jQuery parent selector where the current license logo resides.
  * }
  * @return string
  */
@@ -101,11 +103,15 @@ function cac_cc_get_button_chooser( $args = array() ) {
 		return '';
 	}
 
+	static $instance = false;
+
 	$args = array_merge( array(
 		'modal_title' => __( 'Choose a License', 'cac-creative-commons' ),
 		'link_label'  => __( 'Choose license', 'cac-creative-commons' ),
 		'link_class'  => 'button button-secondary',
-		'link_wrapper_element' => 'p'
+		'link_wrapper_element' => 'p',
+		'output_nonce' => true,
+		'parent' => ''
 	), $args );
 
 	$license_val = esc_attr( cac_cc_get_default_license() );
@@ -120,16 +126,23 @@ function cac_cc_get_button_chooser( $args = array() ) {
 		$wrapper_end   = sprintf( '</%s>', strip_tags( $args['link_wrapper_element'] ) );
 	}
 
-	$nonce   = wp_nonce_field( 'cac-cc-license', 'cac-cc-nonce', false, false );
-	$chooser = <<<STR
+	$survey = '';
 
-	<input type="hidden" id="cac-cc-license" name="cac-cc-license" value="{$license_val}" />
+	$chooser = sprintf(
+		'%1$s<a class="thickbox %2$s" title="%3$s" href="#TB_inline?width=600&height=550&inlineId=cac-cc-survey">%4$s</a>%5$s',
+		$wrapper_start, $args['link_class'], $args['modal_title'], $args['link_label'], $wrapper_end
+	);
 
-	{$wrapper_start}<a class="thickbox {$args['link_class']}" title="{$args['modal_title']}" href="#TB_inline?width=600&height=550&inlineId=cac-cc-survey">{$args['link_label']}</a>{$wrapper_end}
+	if ( false === $instance ) {
+		$instance      = true;
+		$parent_marker = '' !== $args['parent'] ? ' data-parent="' . strip_tags( $args['parent'] ). '"' : '';
 
-	<div id="cac-cc-survey" style="display:none"></div>
+		$survey = sprintf( '<input type="hidden" id="cac-cc-license" name="cac-cc-license" value="%1$s" /><div id="cac-cc-survey" style="display:none"%2$s></div>', $license_val, $parent_marker );
+	}
 
-STR;
-
-	return $nonce . $chooser;
+	if ( true === $args['output_nonce'] ) {
+		return wp_nonce_field( 'cac-cc-license', 'cac-cc-nonce', false, false ) . $chooser . $survey;
+	} else {
+		return $chooser . $survey;
+	}
 }
