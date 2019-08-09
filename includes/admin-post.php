@@ -21,7 +21,7 @@ add_action( 'save_post', function( $post_id ) {
 
 // Add CSS.
 add_action( 'admin_enqueue_scripts', function() {
-	wp_enqueue_style( 'cac-creative-commons-admin-post', CAC_CC_URL . 'assets/admin-post.css', 'cac-creative-commons' );
+	wp_enqueue_style( 'cac-creative-commons-admin-post', CAC_CC_URL . 'assets/admin-post.css', array(), '20190809' );
 }, 20 );
 
 /**

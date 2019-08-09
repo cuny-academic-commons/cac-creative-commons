@@ -13,6 +13,10 @@
 	vertical-align: middle;
 }
 
+.cac-cc-metabox a.edit-license span[aria-hidden] {
+	margin-left: 5px;
+}
+
 @media screen and ( max-width: 782px ) {
 	.cac-cc-metabox	a[rel="license"] {
 		float: none;
