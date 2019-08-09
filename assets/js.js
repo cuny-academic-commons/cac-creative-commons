@@ -48,9 +48,8 @@ let json = {
 window.survey = new Survey.Model(json);
 
 survey.onComplete.add(function(result) {
-	var logo = jQuery("img[data-license]"),
-		link = jQuery("a[rel='license']"),
-		currentLicense = logo.attr('data-license'),
+	var logo, link, currentLicense,
+		parent = jQuery( '#cac-cc-survey[data-parent]' ),
 		selectedContainer = jQuery("div.sv_completed_page"),
 		selectedHeader = selectedContainer.find('h4'),
 		selectedLogo = selectedContainer.find('img.license-logo'),
@@ -64,6 +63,16 @@ survey.onComplete.add(function(result) {
 	} else {
 		newLicense = 'zero';
 	}
+
+	if ( parent.length ) {
+		logo = jQuery( parent.attr('data-parent') + " img[data-license]" );
+		link = jQuery( parent.attr('data-parent') + " a[rel='license']" );
+	} else {
+		logo = jQuery("img[data-license]");
+		link = jQuery("a[rel='license']");
+	}
+
+	currentLicense = logo.attr('data-license')
 
 	// Data
 	jQuery( '#cac-cc-license' ).val( newLicense );
