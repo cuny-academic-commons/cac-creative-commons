@@ -125,20 +125,33 @@ function cac_cc_license_link( $args = array() ) {
  *     @type bool   $use_logo  Whether to use the license logo for the link label. Defaults to false.
  *                             If true, this overrides $label.
  *     @type string $logo_size Logo size for $use_logo. Either 'normal' or 'compact'. Default: 'normal'.
+ *     @type bool   $url_only  Whether to return the license URL only. Default: false.
  * }
  * @return string
  */
 function cac_cc_get_license_link( $args = array() ) {
 	if ( empty( $args['license'] ) ) {
-		$args['license']  = cac_cc_get_default_license();
+		$args['license'] = cac_cc_get_default_license();
 	}
 
 	$args = array_merge( array(
-		'target'     => '_blank',
-		'label'      => cac_cc_get_license_label( $args['license'] ),
-		'use_logo'   => false,
-		'logo_size'  => 'normal'
+		'url_only'  => false,
+		'target'    => '_blank',
+		'label'     => cac_cc_get_license_label( $args['license'] ),
+		'use_logo'  => false,
+		'logo_size' => 'normal',
 	), $args );
+
+	if ( 'zero' === $args['license'] ) {
+		$version = cac_cc_get_zero_license_version();
+	} else {
+		$version = cac_cc_get_license_version();
+	}
+
+	$url = sprintf( 'https://creativecommons.org/licenses/%1$s/%2$s/', esc_attr( $args['license'] ), $version );
+	if ( true === $args['url_only'] ) {
+		return $url;
+	}
 
 	if( true === $args['use_logo'] ) {
 		$args['label'] = cac_cc_get_license_logo( array(
@@ -153,14 +166,8 @@ function cac_cc_get_license_link( $args = array() ) {
 		$target = '';
 	}
 
-	if ( 'zero' === $args['license'] ) {
-		$version = cac_cc_get_zero_license_version();
-	} else {
-		$version = cac_cc_get_license_version();
-	}
-
 	return sprintf( '<a rel="license" data-logo="%4$d" href="%1$s"%2$s>%3$s</a>',
-		'https://creativecommons.org/licenses/' . esc_attr( $args['license'] ) . '/' . $version . '/',
+		$url,
 		$target,
 		$args['label'],
 		(int) $args['use_logo']
@@ -200,14 +207,16 @@ function cac_cc_license_logo( $args = array() ) {
  *     @type string $license   License to get link for. Use short name for the CC license. eg. 'by'.
  *     @type string $alt       Alt text for the logo.
  *     @type string $logo_size Logo size for $use_logo. Either 'normal' or 'compact'. Default: 'normal'.
+ *     @type bool   $url_only  Whether to return the license logo URL only. Default: false.
  * }
  * @return string
  */
 function cac_cc_get_license_logo( $args = array() ) {
 	$args = array_merge( array(
-		'license' => cac_cc_get_default_license(),
-		'alt'     => '',
-		'size'    => cac_cc_get_license_logo_size()
+		'license'  => cac_cc_get_default_license(),
+		'alt'      => '',
+		'size'     => cac_cc_get_license_logo_size(),
+		'url_only' => false
 	), $args );
 
 	// Use license label if 'alt' is empty.
@@ -236,5 +245,10 @@ function cac_cc_get_license_logo( $args = array() ) {
 		$version = cac_cc_get_license_version();
 	}
 
-	return sprintf( '<img src="https://licensebuttons.net/l/%1$s/%2$s/%3$s.png" data-license="%1$s" data-size="%4$s" alt="%5$s" style="border-width:0" />', $args['license'], $version, esc_attr( $size ), esc_attr( $args['size'] ), esc_attr( $args['alt'] ) );
+	$url = sprintf( 'https://licensebuttons.net/l/%1$s/%2$s/%3$s.png', $args['license'], $version, esc_attr( $size ) );
+	if ( true === $args['url_only'] ) {
+		return $url;
+	}
+
+	return sprintf( '<img src="%1$s" data-license="%2$s" data-size="%3$s" alt="%4$s" style="border-width:0" />', $url, $args['license'], esc_attr( $args['size'] ), esc_attr( $args['alt'] ) );
 }
