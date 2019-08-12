@@ -74,6 +74,15 @@ survey.onComplete.add(function(result) {
 
 	currentLicense = logo.attr('data-license')
 
+	// Set defaults before replacement.
+	if ( '' === currentLicense ) {
+		logo.attr( 'src', CAC_Creative_Commons.defaults.logoUrl );
+		if ( link.length ) {
+			link.attr( 'href', CAC_Creative_Commons.defaults.licenseUrl );
+		}
+		currentLicense = CAC_Creative_Commons.defaults.license;
+	}
+
 	// Data
 	jQuery( '#cac-cc-license' ).val( newLicense );
 	logo.attr( 'data-license', newLicense );

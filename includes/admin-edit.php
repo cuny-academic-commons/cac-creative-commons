@@ -98,10 +98,12 @@ function cac_cc_admin_bulk_edit_box( $column_name, $post_type ) {
 
 	printf( '<fieldset class="inline-edit-col-left bulk-edit-cc-license"><div class="inline-edit-col"><span class="title inline-edit-cc-license">%s</span>', $license_label );
 
-	cac_cc_license_link( array( 'use_logo' => true, 'logo_size' => 'compact' ) );
+	printf( '<a rel="license" data-logo="1" href="javascript:;"><img src="%1$s" data-license="" data-size="compact" alt="" style="border-width:0" /></a>', CAC_CC_URL . 'assets/inherit.png' );
 
 	$link_label = esc_html__( 'Edit', 'cac-creative-commons' );
 	$a11y_label = esc_html__( 'Edit license', 'cac-creative-commons' );
+
+	add_filter( 'option_cac_cc_default', '__return_empty_string' );
 
 	cac_cc_button_chooser( array(
 		'link_label' => sprintf( '<span aria-hidden="true">%1$s</span> <span class="screen-reader-text">%2$s</span>', $link_label, $a11y_label ),
@@ -110,6 +112,8 @@ function cac_cc_admin_bulk_edit_box( $column_name, $post_type ) {
 		'output_nonce' => false,
 		'parent' => '#bulk-edit'
 	) );
+
+	remove_filter( 'option_cac_cc_default', '__return_empty_string' );
 
 	echo '</div></fieldset>';
 }

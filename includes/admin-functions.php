@@ -16,7 +16,7 @@ function cac_cc_register_scripts() {
 
 	//wp_register_script( 'cac-showdown', 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.4/showdown.min.js' );
 
-	wp_register_script( 'cac-creative-commons', CAC_CC_URL . 'assets/js.js', array( 'cac-surveyjs', 'media-upload' ), '20190808' );
+	wp_register_script( 'cac-creative-commons', CAC_CC_URL . 'assets/js.js', array( 'cac-surveyjs', 'media-upload' ), '20190812' );
 
 	wp_localize_script( 'cac-creative-commons', 'CAC_Creative_Commons', array(
 		'licenses' => cac_cc_get_licenses(),
@@ -63,6 +63,11 @@ function cac_cc_register_scripts() {
 		'versions' => array(
 			'current' => cac_cc_get_license_version(),
 			'zero'    => cac_cc_get_zero_license_version()
+		),
+		'defaults' => array(
+			'license'    => cac_cc_get_default_license(),
+			'logoUrl'    => cac_cc_get_license_logo( array( 'url_only' => true, 'size' => 'compact' ) ),
+			'licenseUrl' => cac_cc_get_license_link( array( 'url_only' => true ) )
 		)
 	) );
 
