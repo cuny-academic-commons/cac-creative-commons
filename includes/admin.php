@@ -20,5 +20,6 @@ foreach ( array( 'options-writing.php', 'post.php', 'post-new.php', 'edit.php' )
 
 // Save routine for "Settings > Writing" page.
 add_action( 'load-options.php', function() {
+	require_once __DIR__ . '/functions.php';
 	require __DIR__ . '/admin-save-options.php';
 } );
