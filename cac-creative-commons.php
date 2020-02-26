@@ -52,3 +52,8 @@ add_action( 'loop_start', function() {
 add_action( 'bp_init', function() {
 	require __DIR__ . '/includes/buddypress.php';
 } );
+
+// Inject widget after switching theme.
+add_action( 'after_switch_theme', function() {
+	require_once __DIR__ . '/includes/widget-inject.php';
+}, 0 );
