@@ -245,10 +245,10 @@ function cac_cc_get_license_logo( $args = array() ) {
 		$version = cac_cc_get_license_version();
 	}
 
-	$url = sprintf( 'https://licensebuttons.net/l/%1$s/%2$s/%3$s.png', $args['license'], $version, esc_attr( $size ) );
+	$url = sprintf( 'https://licensebuttons.net/l/%1$s/%2$s/%3$s.png', esc_attr( $args['license'] ), $version, $size );
 	if ( true === $args['url_only'] ) {
 		return $url;
 	}
 
-	return sprintf( '<img src="%1$s" data-license="%2$s" data-size="%3$s" alt="%4$s" style="border-width:0" />', $url, $args['license'], esc_attr( $args['size'] ), esc_attr( $args['alt'] ) );
+	return sprintf( '<img src="%1$s" data-license="%2$s" data-size="%3$s" alt="%4$s" style="border-width:0" />', $url, $args['license'], $args['size'], esc_attr( $args['alt'] ) );
 }
