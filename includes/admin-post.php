@@ -21,7 +21,7 @@ add_action( 'save_post', function( $post_id ) {
 
 // Add CSS.
 add_action( 'admin_enqueue_scripts', function() {
-	wp_enqueue_style( 'cac-creative-commons-admin-post', CAC_CC_URL . 'assets/admin-post.css', array(), '20190809' );
+	wp_enqueue_style( 'cac-creative-commons-admin-post', CAC_CC_URL . 'assets/admin-post.css', array(), '20200420' );
 }, 20 );
 
 /**
@@ -76,3 +76,47 @@ function cac_cc_post_add_license_to_metabox( $post, $show_label = true ) {
 	remove_filter( 'option_cac_cc_default', $filter );
 }
 add_action( 'post_submitbox_misc_actions', 'cac_cc_post_add_license_to_metabox', 1 );
+
+/**
+ * Registers our "License" metabox for use with the Block Editor.
+ *
+ * Note: This is only done for the Block Editor. The Classic Editor uses
+ * the older 'post_submitbox_misc_actions' hook for better integration
+ * into the Publish metabox.
+ *
+ * @since 0.1.0
+ *
+ * @param string $post_type Current post type.
+ */
+function cac_cc_block_editor_meta_box( $post_type ) {
+	// Post type doesn't support license, so bail.
+	if ( ! post_type_supports( $post_type, 'cc-license' ) ) {
+		return;
+	}
+
+	// Don't do this for the Classic Editor or if not WP 5.0+.
+	if ( ! function_exists( 'register_block_type' ) || ! get_current_screen()->is_block_editor() ) {
+		return;
+	}
+
+	add_meta_box(
+		'cac-cc-block-editor',
+		esc_html__( 'License', 'cac-creative-commons' ),
+		'cac_cc_block_editor_meta_box_content',
+		$post_type,
+		'side',
+		'high'
+	);
+}
+add_action( 'add_meta_boxes', 'cac_cc_block_editor_meta_box', 0 );
+
+/**
+ * Display callback for our "License" metabox.
+ *
+ * @since 0.1.0
+ *
+ * @apram WP_Post Post object.
+ */
+function cac_cc_block_editor_meta_box_content( $post ) {
+	cac_cc_post_add_license_to_metabox( $post, false );
+}
