@@ -29,9 +29,10 @@ add_action( 'admin_enqueue_scripts', function() {
  *
  * @since 0.1.0
  *
- * @param WP_Post $post Post object.
+ * @param WP_Post $post       Post object.
+ * @param bool    $show_label Whether to show the 'License:' label.
  */
-function cac_cc_post_add_license_to_metabox( $post ) {
+function cac_cc_post_add_license_to_metabox( $post, $show_label = true ) {
 	// Only show our field if the post type supports it.
 	if ( false === post_type_supports( $post->post_type, 'cc-license' ) ) {
 		return;
@@ -52,8 +53,14 @@ function cac_cc_post_add_license_to_metabox( $post ) {
 
 	echo '<div class="misc-pub-section misc-pub-revisions cac-cc-metabox">';
 
-	$license_label = __( 'License: %s', 'cac-creative-commons' );
-	printf( $license_label, cac_cc_get_license_link( array( 'use_logo' => true, 'logo_size' => 'compact' ) ) );
+	$logo = cac_cc_get_license_link( array( 'use_logo' => true, 'logo_size' => 'compact' ) );
+
+	if ( $show_label ) {
+		$license_label = __( 'License: %s', 'cac-creative-commons' );
+		printf( $license_label, $logo );
+	} else {
+		echo $logo;
+	}
 
 	$link_label = esc_html__( 'Edit', 'cac-creative-commons' );
 	$a11y_label = esc_html__( 'Edit license', 'cac-creative-commons' );
