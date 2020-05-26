@@ -9,7 +9,7 @@
 add_action( 'admin_enqueue_scripts', function() {
 	$post_type = str_replace( 'edit-', '', get_current_screen()->id );
 	if ( ! post_type_supports( $post_type, 'cc-license' ) ) {
-		return $retval;
+		return;
 	}
 
 	$css = <<<CSS
