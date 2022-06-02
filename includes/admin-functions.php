@@ -11,8 +11,8 @@
  * @since 0.1.0
  */
 function cac_cc_register_scripts() {
-	wp_register_script( 'cac-surveyjs', 'https://surveyjs.azureedge.net/1.0.46/survey.jquery.js', array( 'jquery' ), '1.0.46' );
-	wp_register_style( 'cac-surveyjs', 'https://surveyjs.azureedge.net/1.0.46/survey.css', array( 'thickbox' ) );
+	wp_register_script( 'cac-surveyjs', 'https://unpkg.com/survey-jquery@1.9.33/survey.jquery.js', array( 'jquery' ), '1.9.33' );
+	wp_register_style( 'cac-surveyjs', 'https://unpkg.com/survey-jquery@1.9.33/survey.min.css', array( 'thickbox' ), '1.9.33' );
 
 	//wp_register_script( 'cac-showdown', 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.4/showdown.min.js' );
 
