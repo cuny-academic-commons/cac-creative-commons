@@ -6,6 +6,44 @@
  */
 
 /**
+ * Should the Creative Commons license display or not?
+ *
+ * Defaults to true if singular page and post type supports 'cc-license'.
+ *
+ * @return bool
+ */
+function cac_cc_frontend_should_display() {
+	/**
+	 * Filter to display the Creative Commons license after the post.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param bool $retval Defaults to true when on a single page and if the post type supports it.
+	 *                     Otherwise, false.
+	 */
+	$show = apply_filters( 'cac_cc_display_license_after_post', is_singular() && post_type_supports( get_post_type(), 'cc-license' ) );
+
+	return $show;
+}
+
+/**
+ * Add our custom inline CSS style.
+ */
+function _cac_cc_add_inline_style() {
+	if ( ! cac_cc_frontend_should_display() ) {
+		return;
+	}
+
+	// Hack to use inline CSS without an external stylesheet.
+	wp_register_style( 'cac-creative-commons', false );
+	wp_enqueue_style( 'cac-creative-commons' );
+
+	// Our inline CSS.
+	wp_add_inline_style( 'cac-creative-commons', '.entry-meta-creative-commons {clear:both; margin-top:1em}' );
+}
+add_action( 'wp_enqueue_scripts', '_cac_cc_add_inline_style', 999 );
+
+/**
  * Appends license to the post content.
  *
  * @since 0.1.0
@@ -37,17 +75,7 @@ function _cac_cc_append_to_the_post( $retval = '') {
 		return $retval;
 	}
 
-	/**
-	 * Filter to display the Creative Commons license after the post.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param bool $retval Defaults to true when on a single page and if the post type supports it.
-	 *                     Otherwise, false.
-	 */
-	$show = apply_filters( 'cac_cc_display_license_after_post', is_singular() && post_type_supports( get_post_type(), 'cc-license' ) );
-
-	if ( ! $show ) {
+	if ( ! cac_cc_frontend_should_display() ) {
 		return $retval;
 	}
 

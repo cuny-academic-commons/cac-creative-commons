@@ -38,12 +38,7 @@ function cac_cc_widgets_init() {
 add_action( 'widgets_init', 'cac_cc_widgets_init' );
 
 // Frontend post integration.
-add_action( 'loop_start', function() {
-	// Only do this if the header has run.
-	if ( ! did_action( 'get_header' ) ) {
-		return;
-	}
-
+add_action( 'get_header', function() {
 	require_once __DIR__ . '/includes/functions.php';
 	require_once __DIR__ . '/includes/frontend.php';
 } );
