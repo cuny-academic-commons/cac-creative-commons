@@ -21,6 +21,10 @@ function _cac_cc_widget_inject() {
 
 	$sidebars_widgets = get_option( 'sidebars_widgets', [] );
 
+	if ( ! is_array( $sidebars_widgets ) ) {
+		$sidebars_widgets = [];
+	}
+
 	// Sanity check: Check to see if our widget is already added to *any* sidebar.
 	$all_widgets = new RecursiveIteratorIterator( new RecursiveArrayIterator( $sidebars_widgets ) );
 	foreach ( $all_widgets as $i => $widget ) {
